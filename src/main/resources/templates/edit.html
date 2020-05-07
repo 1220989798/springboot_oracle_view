@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css"  rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="asserts/css/dashboard.css"  rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+    <script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js" ></script>
+    <script type="text/javascript" src="asserts/js/jquery-2.1.1.min.js" ></script>
+    <script type="text/javascript">
+
+        function editEmp() {
+            var id = $("#id").val();
+            var name = $("#name").val();
+            var gender = $("#form input[type=radio]:checked").val();
+            var email = $("#email").val();
+            var birth = $("#birth").val();
+
+            $.ajax({
+                url:"/updateEmp",
+                type:"POST",
+                data:{
+                    "id":id,
+                    "name":name,
+                    "gender":gender,
+                    "email":email,
+                    "birth":birth
+                },
+                success:function (data) {
+                    alert(data);
+                    window.location.href="/emps"
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <!--需要区分是员工修改还是添加；-->
+    <form action="" method="post" id="form">
+
+        <input  id="id" name="id" type="hidden" th:value="${emp.id}">
+        <div class="form-group">
+            <label>name</label>
+            <input name="name" id="name" type="text" class="form-control" placeholder="zhangsan" th:value="${emp.name}">
+        </div>
+        <div class="form-group">
+            <label>Gender</label><br/>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" value="1" th:checked="${emp.gender ==1}">
+                <label class="form-check-label" >男</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" value="0" th:checked="${emp.gender==0}">
+                <label class="form-check-label">女</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>email</label>
+            <input name="email" type="text" id="email" class="form-control" placeholder="xx@xx.com" th:value="${emp.email}">
+        </div>
+        <div class="form-group">
+            <label>Birth</label>
+            <input name="birth" type="text" id="birth" class="form-control" placeholder="yyyy-MM-dd" th:value="${#dates.format(emp.birth,'yyyy-MM-dd')}">
+        </div>
+        <button type="button" onclick="editEmp()" class="btn btn-primary">修改</button>
+    </form>
+</main>
+
+
+<script type="text/javascript" src="asserts/js/popper.min.js" ></script>
+<script type="text/javascript" src="asserts/js/bootstrap.min.js" ></script>
+
+<!-- Icons -->
+<script type="text/javascript" src="asserts/js/feather.min.js" ></script>
+<script>
+    feather.replace()
+</script>
+</body>
+</html>

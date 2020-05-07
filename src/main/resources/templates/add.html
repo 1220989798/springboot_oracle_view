@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css"  rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="asserts/css/dashboard.css"  rel="stylesheet">
+    <script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js" ></script>
+    <script type="text/javascript" src="asserts/js/jquery-2.1.1.min.js" ></script>
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+    <script type="text/javascript">
+        function addEmp() {
+           var name = $("#name").val();
+            var gender = $("#form input[type='radio']:checked").val();
+           var email = $("#email").val();
+           var birth = $("#birth").val();
+
+            $.ajax({
+                url:"/addEmp",
+                type:"POST",
+                data:{
+                    "name":name,
+                    "gender":gender,
+                    "email":email,
+                    "birth":birth
+                },
+                success:function (data) {
+                    window.location.href="/emps"
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <!--需要区分是员工修改还是添加；-->
+    <form  method="post" id="form">
+
+        <div class="form-group">
+            <label>name</label>
+            <input name="name" id="name" type="text" class="form-control" placeholder="zhangsan">
+        </div>
+        <div class="form-group">
+            <label>Gender</label><br/>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" value="1" >
+                <label class="form-check-label">男</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" value="0">
+                <label class="form-check-label">女</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>email</label>
+            <input name="email" id="email" type="text" class="form-control" placeholder="xx@xx.com">
+        </div>
+        <div class="form-group">
+            <label>Birth</label>
+            <input name="birth" id="birth" type="text" class="form-control" placeholder="yyyy-MM-dd">
+        </div>
+        <button  id="submit" type="button" class="btn btn-primary" onclick="addEmp()">添加</button>
+    </form>
+</main>
+
+
+<script type="text/javascript" src="asserts/js/popper.min.js" ></script>
+<script type="text/javascript" src="asserts/js/bootstrap.min.js" ></script>
+
+<!-- Icons -->
+<script type="text/javascript" src="asserts/js/feather.min.js" ></script>
+<script>
+    feather.replace()
+</script>
+</body>
+</html>
